@@ -23,7 +23,7 @@ export const WhyDidItDropView: React.FC<WhyDidItDropViewProps> = ({
   return (
     <div className="max-w-5xl mx-auto py-4 sm:py-6">
       {/* Header */}
-      <div className={`flex items-center justify-between gap-4 mb-6 pb-4 border-b ${
+      <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 pb-4 border-b ${
         isDarkTheme ? 'border-slate-800 text-slate-100' : 'border-slate-200'
       }`}>
         <div className="flex items-center gap-3">
@@ -37,8 +37,8 @@ export const WhyDidItDropView: React.FC<WhyDidItDropViewProps> = ({
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className={`text-xl font-bold tracking-tight ${isDarkTheme ? 'text-white' : 'text-slate-900'}`}>
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className={`text-lg sm:text-xl font-bold tracking-tight ${isDarkTheme ? 'text-white' : 'text-slate-900'}`}>
                 Why Did My Solar Drop?
               </h1>
               <span className="text-xs font-semibold px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30">
@@ -54,7 +54,7 @@ export const WhyDidItDropView: React.FC<WhyDidItDropViewProps> = ({
         {/* Demo degraded toggle */}
         <button
           onClick={() => setIsLlmDegraded(!isLlmDegraded)}
-          className={`text-xs underline decoration-dotted transition-colors ${
+          className={`text-xs underline decoration-dotted transition-colors self-start sm:self-auto ${
             isDarkTheme ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-800'
           }`}
           title="Simulate LLM API timeout/outage to verify resilient fallback UI"
@@ -67,14 +67,14 @@ export const WhyDidItDropView: React.FC<WhyDidItDropViewProps> = ({
         {/* Left 2 Cols: Arithmetic Breakdown & Narration */}
         <div className="lg:col-span-2 space-y-6">
           {/* 1. Arithmetic Decomposition Card */}
-          <div className={`rounded-xl p-5 border transition-all ${
+          <div className={`rounded-xl p-4 sm:p-5 border transition-all ${
             isDarkTheme ? 'bg-[#0B1322] border-slate-800 text-slate-100 shadow-sm' : 'bg-white border-slate-200 shadow-xs'
           }`}>
             <h2 className={`text-xs font-semibold uppercase tracking-wider mb-3 ${isDarkTheme ? 'text-slate-400' : 'text-slate-500'}`}>
               1. Deterministic Physical Decomposition (Arithmetic First)
             </h2>
 
-            <div className={`grid grid-cols-3 gap-3 p-4 rounded-lg mb-4 text-center font-mono tabular-nums border ${
+            <div className={`grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 p-3.5 sm:p-4 rounded-lg mb-4 text-center font-mono tabular-nums border ${
               isDarkTheme ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-50 border-slate-200'
             }`}>
               <div>

@@ -152,7 +152,7 @@ export const HeroSolarHouse: React.FC<HeroSolarHouseProps> = ({
   }
 
   return (
-    <div className="relative w-full h-[calc(100vh-4rem)] min-h-[620px] overflow-hidden select-none bg-[#FAF8F5] transition-colors duration-700 flex flex-col justify-between">
+    <div className="relative w-full h-[calc(100dvh-4rem)] min-h-[560px] sm:min-h-[620px] overflow-hidden select-none bg-[#FAF8F5] transition-colors duration-700 flex flex-col justify-between">
       {/* 1. HERO SOLAR HOUSE VISUAL - FULL FRAME (Edge-to-edge, matching SolarSense warm daylight palette) */}
       <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
         {!is3DMode ? (
@@ -288,32 +288,33 @@ export const HeroSolarHouse: React.FC<HeroSolarHouseProps> = ({
               onSelectObject={(objId) => handleOpenDrawer(objId)}
               className="w-full h-full"
             />
-            {/* 3D Mode Hint Pill */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 px-3.5 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700/60 text-slate-200 text-xs font-mono shadow-lg flex items-center gap-2 pointer-events-none">
-              <RotateCw className="w-3.5 h-3.5 text-amber-400 animate-spin-slow" />
-              <span>Interactive 3D Active · Click & Drag to Orbit · Scroll to Zoom</span>
+            {/* 3D Mode Hint Pill - responsive text prevents mobile overflow */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 px-3 sm:px-3.5 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700/60 text-slate-200 text-xs font-mono shadow-lg flex items-center gap-1.5 sm:gap-2 pointer-events-none max-w-[90vw] truncate">
+              <RotateCw className="w-3.5 h-3.5 text-amber-400 animate-spin-slow shrink-0" />
+              <span className="hidden sm:inline">Interactive 3D Active · Click & Drag to Orbit · Scroll to Zoom</span>
+              <span className="sm:hidden">3D Active · Drag to Orbit</span>
             </div>
           </div>
         )}
       </div>
 
       {/* 2. FLOATING HUD METRICS (Streamlined & Clear of Left Dock and Header) */}
-      <div className="relative z-10 w-full pointer-events-none px-4 sm:px-6 pt-4 sm:pt-6">
-        <div className="max-w-7xl mx-auto md:pl-48 lg:pl-52">
-          {/* Top Row: Streamlined frosted pills that never collide */}
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+      <div className="relative z-10 w-full pointer-events-none px-3 sm:px-6 pt-3 sm:pt-6">
+        <div className="max-w-7xl mx-auto md:pl-40 lg:pl-48">
+          {/* Top Row: Streamlined frosted pills that wrap neatly on mobile without obscuring house */}
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             {/* Pill 1: SOLAR GENERATION */}
             <div
               onClick={() => handleOpenDrawer('solar')}
               className="pointer-events-auto cursor-pointer group transition-transform duration-150 hover:scale-105 active:scale-95"
             >
-              <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-white/92 hover:bg-white backdrop-blur-md border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.06)] hover:shadow-md transition-all">
-                <div className="w-7 h-7 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-2 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-white/92 hover:bg-white backdrop-blur-md border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.06)] hover:shadow-md transition-all">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center shrink-0">
                   <Sun className="w-3.5 h-3.5 text-amber-500" />
                 </div>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-xs text-[#134074] font-medium">Solar</span>
-                  <span className="text-sm font-bold text-[#0B2545] font-mono">
+                <div className="flex items-baseline gap-1 sm:gap-1.5">
+                  <span className="text-[11px] sm:text-xs text-[#134074] font-medium">Solar</span>
+                  <span className="text-xs sm:text-sm font-bold text-[#0B2545] font-mono">
                     {solarGenKw > 0 ? `${solarGenKw.toFixed(2)} kW` : '0.00 kW'}
                   </span>
                 </div>
@@ -331,13 +332,13 @@ export const HeroSolarHouse: React.FC<HeroSolarHouseProps> = ({
               onClick={() => handleOpenDrawer('house')}
               className="pointer-events-auto cursor-pointer group transition-transform duration-150 hover:scale-105 active:scale-95"
             >
-              <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-white/92 hover:bg-white backdrop-blur-md border border-sky-100/80 shadow-[0_4px_20px_rgb(0,0,0,0.06)] hover:shadow-md transition-all">
-                <div className="w-7 h-7 rounded-xl bg-sky-50 border border-sky-200/60 flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-2 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-white/92 hover:bg-white backdrop-blur-md border border-sky-100/80 shadow-[0_4px_20px_rgb(0,0,0,0.06)] hover:shadow-md transition-all">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-sky-50 border border-sky-200/60 flex items-center justify-center shrink-0">
                   <HomeIcon className="w-3.5 h-3.5 text-sky-500" />
                 </div>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-xs text-[#134074] font-medium">Home</span>
-                  <span className="text-sm font-bold text-[#0B2545] font-mono">
+                <div className="flex items-baseline gap-1 sm:gap-1.5">
+                  <span className="text-[11px] sm:text-xs text-[#134074] font-medium">Home</span>
+                  <span className="text-xs sm:text-sm font-bold text-[#0B2545] font-mono">
                     {homeUsageKw.toFixed(1)} kW
                   </span>
                 </div>
@@ -350,13 +351,13 @@ export const HeroSolarHouse: React.FC<HeroSolarHouseProps> = ({
               onClick={() => handleOpenDrawer('grid')}
               className="pointer-events-auto cursor-pointer group transition-transform duration-150 hover:scale-105 active:scale-95"
             >
-              <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-white/92 hover:bg-white backdrop-blur-md border border-sky-100/80 shadow-[0_4px_20px_rgb(0,0,0,0.06)] hover:shadow-md transition-all">
-                <div className="w-7 h-7 rounded-xl bg-indigo-50 border border-indigo-200/60 flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-2 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-white/92 hover:bg-white backdrop-blur-md border border-sky-100/80 shadow-[0_4px_20px_rgb(0,0,0,0.06)] hover:shadow-md transition-all">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-indigo-50 border border-indigo-200/60 flex items-center justify-center shrink-0">
                   <Zap className="w-3.5 h-3.5 text-indigo-500" />
                 </div>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-xs text-[#134074] font-medium">Grid</span>
-                  <span className="text-sm font-bold text-[#0B2545] font-mono">
+                <div className="flex items-baseline gap-1 sm:gap-1.5">
+                  <span className="text-[11px] sm:text-xs text-[#134074] font-medium">Grid</span>
+                  <span className="text-xs sm:text-sm font-bold text-[#0B2545] font-mono">
                     {gridExportKw > 0 ? `+${gridExportKw.toFixed(1)} kW` : `-${gridImportKw.toFixed(1)} kW`}
                   </span>
                 </div>
@@ -374,13 +375,13 @@ export const HeroSolarHouse: React.FC<HeroSolarHouseProps> = ({
               onClick={() => handleOpenDrawer('battery')}
               className="pointer-events-auto cursor-pointer group transition-transform duration-150 hover:scale-105 active:scale-95"
             >
-              <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-white/92 hover:bg-white backdrop-blur-md border border-emerald-200/60 shadow-[0_4px_20px_rgba(16,185,129,0.08)] hover:shadow-md transition-all">
-                <div className="w-7 h-7 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-2 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-white/92 hover:bg-white backdrop-blur-md border border-emerald-200/60 shadow-[0_4px_20px_rgba(16,185,129,0.08)] hover:shadow-md transition-all">
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center shrink-0">
                   <BatteryCharging className="w-3.5 h-3.5 text-emerald-600" />
                 </div>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-xs text-[#134074] font-medium">Battery</span>
-                  <span className="text-sm font-bold text-[#0B2545] font-mono">
+                <div className="flex items-baseline gap-1 sm:gap-1.5">
+                  <span className="text-[11px] sm:text-xs text-[#134074] font-medium">Battery</span>
+                  <span className="text-xs sm:text-sm font-bold text-[#0B2545] font-mono">
                     {batteryPct}%
                   </span>
                 </div>
@@ -392,42 +393,69 @@ export const HeroSolarHouse: React.FC<HeroSolarHouseProps> = ({
       </div>
 
       {/* 3. BOTTOM CONTROLS ROW (Today's Energy + Day Slider + 3D Toggle) */}
-      <div className="relative z-10 w-full pointer-events-none px-4 sm:px-6 pb-20 md:pb-8 pt-4">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 md:pl-48 lg:pl-52">
-          {/* Card: Today's Energy Performance */}
-          <div
-            onClick={() => onOpenDecompositionModal ? onOpenDecompositionModal() : handleOpenDrawer('today')}
-            className="pointer-events-auto cursor-pointer group transition-transform duration-150 hover:scale-105 active:scale-95 w-full sm:w-auto"
-          >
-            <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/92 backdrop-blur-md border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-md transition-all">
-              <div className="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center shrink-0">
-                <TrendingUp className="w-4 h-4 text-emerald-600" />
-              </div>
-              <div>
-                <div className="text-[11px] font-medium text-[#134074]">Today's Energy</div>
-                <div className="text-base font-bold text-[#0B2545] leading-tight">
-                  {cumulativeTodayKwh.toFixed(1)} kWh
+      <div className="relative z-10 w-full pointer-events-none px-3 sm:px-6 pb-[calc(5rem+env(safe-area-inset-bottom,0px))] md:pb-8 pt-2 sm:pt-4">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-4 md:pl-40 lg:pl-48">
+          {/* Mobile Top Sub-Row: Today's Energy Card + 3D Orbit Button paired side-by-side */}
+          <div className="flex items-center justify-between w-full sm:w-auto gap-2">
+            {/* Card: Today's Energy Performance */}
+            <div
+              onClick={() => onOpenDecompositionModal ? onOpenDecompositionModal() : handleOpenDrawer('today')}
+              className="pointer-events-auto cursor-pointer group transition-transform duration-150 hover:scale-105 active:scale-95 flex-1 sm:flex-initial"
+            >
+              <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl bg-white/92 backdrop-blur-md border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-md transition-all">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center shrink-0">
+                  <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600" />
                 </div>
-                <div className="text-[10px] font-medium text-emerald-600">
-                  ↑ +18% vs yesterday
+                <div>
+                  <div className="text-[10px] sm:text-[11px] font-medium text-[#134074] leading-tight">Today's Energy</div>
+                  <div className="text-xs sm:text-base font-bold text-[#0B2545] leading-tight font-mono">
+                    {cumulativeTodayKwh.toFixed(1)} kWh
+                  </div>
+                  <div className="text-[9px] sm:text-[10px] font-medium text-emerald-600 leading-tight">
+                    ↑ +18%
+                  </div>
+                </div>
+                {/* Mini Sparkline - visible on screens >= 400px */}
+                <div className="hidden min-[400px]:flex items-end gap-1 h-6 sm:h-7 pl-2 border-l border-sky-100">
+                  {[20, 35, 55, 75, 95, 80, 60, 40].map((h, i) => (
+                    <div
+                      key={i}
+                      className="w-0.5 sm:w-1 rounded-t-sm bg-gradient-to-t from-sky-400 to-emerald-400"
+                      style={{ height: `${h}%` }}
+                    />
+                  ))}
                 </div>
               </div>
-              {/* Mini Sparkline */}
-              <div className="flex items-end gap-1 h-7 pl-2 border-l border-sky-100">
-                {[20, 35, 55, 75, 95, 80, 60, 40].map((h, i) => (
-                  <div
-                    key={i}
-                    className="w-1 rounded-t-sm bg-gradient-to-t from-sky-400 to-emerald-400"
-                    style={{ height: `${h}%` }}
-                  />
-                ))}
-              </div>
+            </div>
+
+            {/* Mobile-only 3D Toggle button placed beside Today's Energy pill */}
+            <div className="pointer-events-auto sm:hidden shrink-0">
+              <button
+                onClick={() => {
+                  setIs3DMode(!is3DMode);
+                  if (!is3DMode) setIsRotating(true);
+                }}
+                className="flex items-center gap-1.5 px-3 py-2.5 rounded-2xl bg-gradient-to-r from-[#0B2545] via-[#0284C7] to-[#38BDF8] text-white text-xs font-bold tracking-wide shadow-[0_4px_16px_rgba(2,132,199,0.3)] border border-sky-300/30 backdrop-blur-md transition-all active:scale-95"
+                title="Toggle interactive 3D Orbit view"
+              >
+                {is3DMode ? (
+                  <>
+                    <Box className="w-3.5 h-3.5" />
+                    <span>Photo</span>
+                  </>
+                ) : (
+                  <>
+                    <RotateCw className="w-3.5 h-3.5" />
+                    <span>3D Orbit</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
 
-          {/* Center: Draggable Floating Day/Night Timeline Controller */}
-          <div className="pointer-events-auto w-full sm:w-auto min-w-[320px] sm:min-w-[440px]">
-            <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/92 backdrop-blur-md border border-sky-100/80 shadow-[0_8px_30px_rgba(2,132,199,0.08)]">
+          {/* Center: Draggable Floating Day/Night Timeline Controller (Stretches fluidly on mobile) */}
+          <div className="pointer-events-auto w-full sm:w-auto min-w-0 sm:min-w-[380px] lg:min-w-[440px]">
+            <div className="flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/92 backdrop-blur-md border border-sky-100/80 shadow-[0_8px_30px_rgba(2,132,199,0.08)]">
               {/* Play / Pause Cycle Button */}
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
@@ -437,47 +465,48 @@ export const HeroSolarHouse: React.FC<HeroSolarHouseProps> = ({
                 {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 ml-0.5" />}
               </button>
 
-              <div className="flex-1 flex flex-col gap-1">
-                {/* Labels and Time Pill */}
-                <div className="flex items-center justify-between text-[11px] font-semibold text-[#134074]">
+              <div className="flex-1 flex flex-col gap-1 min-w-0">
+                {/* Labels and Time Pill - abbreviated on narrow screens to prevent overlap */}
+                <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-semibold text-[#134074]">
                   <button
                     onClick={() => onHourChange(8.4)}
-                    className={`hover:text-[#0284C7] transition-colors ${
+                    className={`hover:text-[#0284C7] transition-colors truncate ${
                       activeHour >= 6 && activeHour < 11 ? 'text-[#0284C7] font-bold' : ''
                     }`}
                   >
-                    ☀ Morning
+                    ☀ <span className="hidden min-[420px]:inline">Morning</span>
                   </button>
 
-                  <div className="px-2.5 py-0.5 rounded-md bg-[#0B2545] text-white text-[11px] font-bold">
+                  <button
+                    onClick={() => onHourChange(12.5)}
+                    className={`hover:text-[#0284C7] transition-colors truncate ${
+                      activeHour >= 11 && activeHour < 16 ? 'text-[#0284C7] font-bold' : ''
+                    }`}
+                  >
+                    ☼ <span className="hidden min-[420px]:inline">Noon</span>
+                  </button>
+
+                  {/* Central Time Badge */}
+                  <div className="px-2 sm:px-2.5 py-0.5 rounded-md bg-[#0B2545] text-white text-[10px] sm:text-[11px] font-mono font-bold shrink-0 shadow-2xs">
                     {formatTime(activeHour)}
                   </div>
 
                   <button
-                    onClick={() => onHourChange(12.5)}
-                    className={`hover:text-[#0284C7] transition-colors ${
-                      activeHour >= 11 && activeHour < 16 ? 'text-[#0284C7] font-bold' : ''
-                    }`}
-                  >
-                    ☼ Noon
-                  </button>
-
-                  <button
                     onClick={() => onHourChange(18.0)}
-                    className={`hover:text-sky-600 transition-colors ${
+                    className={`hover:text-sky-600 transition-colors truncate ${
                       activeHour >= 16 && activeHour < 20 ? 'text-sky-600 font-bold' : ''
                     }`}
                   >
-                    🌅 Evening
+                    🌅 <span className="hidden min-[420px]:inline">Evening</span>
                   </button>
 
                   <button
                     onClick={() => onHourChange(22.0)}
-                    className={`hover:text-indigo-600 transition-colors ${
+                    className={`hover:text-indigo-600 transition-colors truncate ${
                       activeHour >= 20 || activeHour < 6 ? 'text-indigo-600 font-bold' : ''
                     }`}
                   >
-                    🌙 Night
+                    🌙 <span className="hidden min-[420px]:inline">Night</span>
                   </button>
                 </div>
 
@@ -496,8 +525,8 @@ export const HeroSolarHouse: React.FC<HeroSolarHouseProps> = ({
             </div>
           </div>
 
-          {/* Right: Toggle 3D Orbit / CGI View */}
-          <div className="pointer-events-auto">
+          {/* Desktop/Tablet 3D Toggle Button (Hidden on mobile where it's paired above) */}
+          <div className="pointer-events-auto hidden sm:block shrink-0">
             <button
               onClick={() => {
                 setIs3DMode(!is3DMode);
@@ -532,7 +561,7 @@ export const HeroSolarHouse: React.FC<HeroSolarHouseProps> = ({
             aria-hidden="true"
           />
 
-          <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[380px] bg-white/95 backdrop-blur-xl border-l border-slate-200 shadow-2xl p-6 overflow-y-auto animate-fadeIn flex flex-col justify-between">
+          <div className="fixed inset-y-0 right-0 z-50 w-full sm:w-[380px] bg-white/95 backdrop-blur-xl border-l border-slate-200 shadow-2xl p-5 sm:p-6 pb-24 sm:pb-6 overflow-y-auto animate-fadeIn flex flex-col justify-between">
             <div className="space-y-5">
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">

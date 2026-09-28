@@ -119,12 +119,12 @@ export const EchoTwinEnergyEngine: React.FC<EchoTwinEnergyEngineProps> = ({
         </div>
 
         {/* Play / Pause & Scenario Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {/* Scenario Selector Pills */}
-          <div className="flex items-center bg-sky-50/80 border border-sky-200/80 p-1 rounded-xl text-xs gap-1">
+          <div className="flex flex-wrap items-center bg-sky-50/80 border border-sky-200/80 p-1 rounded-xl text-xs gap-1">
             <button
               onClick={() => setScenario('benchmark')}
-              className={`px-3 py-1 rounded-lg transition-all whitespace-nowrap font-bold text-xs ${
+              className={`px-2.5 sm:px-3 py-1 rounded-lg transition-all whitespace-nowrap font-bold text-xs ${
                 scenario === 'benchmark'
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-xs'
                   : 'text-[#134074] hover:text-[#0284C7]'
@@ -134,7 +134,7 @@ export const EchoTwinEnergyEngine: React.FC<EchoTwinEnergyEngineProps> = ({
             </button>
             <button
               onClick={() => setScenario('peak')}
-              className={`px-3 py-1 rounded-lg transition-all whitespace-nowrap font-bold text-xs ${
+              className={`px-2.5 sm:px-3 py-1 rounded-lg transition-all whitespace-nowrap font-bold text-xs ${
                 scenario === 'peak'
                   ? 'bg-gradient-to-r from-[#0284C7] to-[#0369A1] text-white shadow-xs'
                   : 'text-[#134074] hover:text-[#0284C7]'
@@ -144,7 +144,7 @@ export const EchoTwinEnergyEngine: React.FC<EchoTwinEnergyEngineProps> = ({
             </button>
             <button
               onClick={() => setScenario('cloud')}
-              className={`px-3 py-1 rounded-lg transition-all whitespace-nowrap font-bold text-xs ${
+              className={`px-2.5 sm:px-3 py-1 rounded-lg transition-all whitespace-nowrap font-bold text-xs ${
                 scenario === 'cloud'
                   ? 'bg-gradient-to-r from-sky-400 to-[#0284C7] text-white shadow-xs'
                   : 'text-[#134074] hover:text-[#0284C7]'
@@ -154,28 +154,30 @@ export const EchoTwinEnergyEngine: React.FC<EchoTwinEnergyEngineProps> = ({
             </button>
           </div>
 
-          <button
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="p-1.5 text-[#134074] hover:text-[#0284C7] bg-white hover:bg-sky-50 rounded-xl border border-sky-200/80 transition-colors shadow-xs"
-            title={isPlaying ? 'Pause Animation' : 'Play Animation'}
-            aria-label={isPlaying ? 'Pause' : 'Play'}
-          >
-            {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="p-1.5 text-[#134074] hover:text-[#0284C7] bg-white hover:bg-sky-50 rounded-xl border border-sky-200/80 transition-colors shadow-xs"
+              title={isPlaying ? 'Pause Animation' : 'Play Animation'}
+              aria-label={isPlaying ? 'Pause' : 'Play'}
+            >
+              {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+            </button>
 
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="p-1.5 text-[#134074] hover:text-[#0284C7] bg-white hover:bg-sky-50 rounded-xl border border-sky-200/80 transition-colors shadow-xs"
-            title={isExpanded ? 'Collapse' : 'Expand View'}
-            aria-label="Toggle Full View"
-          >
-            {isExpanded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-          </button>
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="p-1.5 text-[#134074] hover:text-[#0284C7] bg-white hover:bg-sky-50 rounded-xl border border-sky-200/80 transition-colors shadow-xs"
+              title={isExpanded ? 'Collapse' : 'Expand View'}
+              aria-label="Toggle Full View"
+            >
+              {isExpanded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* 2. Main Stage: Daytime Cloudy Sky Canvas */}
-      <div className={`relative w-full ${isExpanded ? 'h-[540px]' : 'h-[370px]'} bg-gradient-to-b from-[#EBF5FD] via-[#F4F9FD] to-[#FFFFFF] overflow-hidden select-none transition-all`}>
+      <div className={`relative w-full ${isExpanded ? 'h-[460px] sm:h-[540px]' : 'h-[270px] sm:h-[370px]'} bg-gradient-to-b from-[#EBF5FD] via-[#F4F9FD] to-[#FFFFFF] overflow-hidden select-none transition-all`}>
         {/* Background Coordinate Tech Grid */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#0284c712_1px,transparent_1px),linear-gradient(to_bottom,#0284c712_1px,transparent_1px)] bg-[size:32px_32px] opacity-70 pointer-events-none" />
 
@@ -539,15 +541,15 @@ export const EchoTwinEnergyEngine: React.FC<EchoTwinEnergyEngineProps> = ({
           </div>
         </div>
 
-        {/* Live Active Scenario Banner (Top Right HUD) */}
-        <div className="absolute top-3 right-4 bg-white/90 border border-sky-200/80 rounded-xl px-3 py-1.5 backdrop-blur-md text-xs flex items-center gap-2 shadow-xs">
+        {/* Live Active Scenario Banner (Top Right HUD - hidden on small mobile) */}
+        <div className="absolute top-3 right-4 bg-white/90 border border-sky-200/80 rounded-xl px-2.5 sm:px-3 py-1 sm:py-1.5 backdrop-blur-md text-[11px] sm:text-xs hidden sm:flex items-center gap-1.5 sm:gap-2 shadow-xs">
           <span className="text-[#134074] font-medium">Simulation:</span>
-          <span className="font-bold text-[#0B2545]">{currentTelemetry.title}</span>
+          <span className="font-bold text-[#0B2545] truncate max-w-[200px]">{currentTelemetry.title}</span>
         </div>
       </div>
 
       {/* 3. Interactive Detail Drawer for Selected Node: Pure Blue Theme */}
-      <div className="p-4 sm:p-5 bg-sky-50/70 border-t border-sky-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+      <div className="p-3.5 sm:p-5 bg-sky-50/70 border-t border-sky-100/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 text-xs">
         <div className="flex items-start gap-3">
           <div className="w-9 h-9 rounded-xl bg-white border border-sky-200/80 flex items-center justify-center shrink-0 mt-0.5 text-[#0284C7] shadow-xs">
             {selectedNode === 'core' && <Cpu className="w-4 h-4 text-[#0284C7]" />}

@@ -150,7 +150,7 @@ export const SolarView: React.FC<SolarViewProps> = ({
           </div>
 
           {/* Simple Time Filter */}
-          <div className="flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-medium self-start sm:self-auto">
+          <div className="flex flex-wrap items-center p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-medium self-start sm:self-auto gap-0.5">
             <button
               onClick={() => setTimeRange('today')}
               className={`px-3 py-1 rounded-lg transition-all ${
@@ -178,11 +178,11 @@ export const SolarView: React.FC<SolarViewProps> = ({
           </div>
         </div>
 
-        {/* Clean SVG Graph */}
-        <div className="w-full overflow-x-auto">
+        {/* Clean SVG Graph - Scalable vector graphic adapts fluidly to all screens */}
+        <div className="w-full">
           <svg
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-            className="w-full h-auto min-w-[500px]"
+            className="w-full h-auto"
           >
             {/* Subtle horizontal grid lines */}
             {[0, 0.33, 0.66, 1].map((ratio, i) => {

@@ -53,8 +53,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </p>
         </div>
 
-        {/* Sub-tabs */}
-        <div className="flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-medium">
+        {/* Sub-tabs - scrollable on mobile */}
+        <div className="flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs font-medium overflow-x-auto max-w-full gap-0.5">
           {[
             { id: 'systems', label: 'My Systems' },
             { id: 'simulator', label: 'What-If Simulator' },
@@ -64,7 +64,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <button
               key={tab.id}
               onClick={() => setActiveSubTab(tab.id as any)}
-              className={`px-3 py-1 rounded-lg transition-all ${
+              className={`px-3 py-1.5 rounded-lg transition-all shrink-0 whitespace-nowrap ${
                 activeSubTab === tab.id
                   ? 'bg-white text-slate-900 font-bold shadow-xs'
                   : 'text-slate-500 hover:text-slate-900'

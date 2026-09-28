@@ -126,9 +126,9 @@ export default function App() {
           />
         )}
 
-        {/* SECONDARY VIEWS CONTAINER WITH RESPONSIVE MARGINS (Clear of Left Dock) */}
+        {/* SECONDARY VIEWS CONTAINER WITH RESPONSIVE MARGINS (Clear of Left Dock and Mobile Bottom Nav) */}
         {activeTab !== 'home' && (
-          <div className="md:pl-48 lg:pl-52 pb-24 md:pb-8">
+          <div className="md:pl-40 lg:pl-48 pb-[calc(5rem+env(safe-area-inset-bottom,0px))] md:pb-8">
             {/* VIEW 1: SOLAR */}
             {activeTab === 'solar' && (
               <SolarView
@@ -187,11 +187,11 @@ export default function App() {
 
       {/* 3. MODAL: "WHY DID IT DROP?" DEVIATION DECOMPOSITION MODAL */}
       {isWhyDropModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto animate-fadeIn">
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 relative">
+        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-fadeIn">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-2xl max-w-4xl w-full max-h-[92dvh] overflow-y-auto p-4 sm:p-8 relative">
             <button
               onClick={() => setIsWhyDropModalOpen(false)}
-              className="absolute top-6 right-6 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />

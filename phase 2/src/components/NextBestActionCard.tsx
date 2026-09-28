@@ -118,8 +118,8 @@ export const NextBestActionCard: React.FC<NextBestActionCardProps> = ({
         </div>
 
         {/* Right Side: Estimated Recovery Metrics & Action Button */}
-        <div className="flex flex-row lg:flex-col items-center lg:items-end justify-between lg:justify-center border-t lg:border-t-0 pt-3 lg:pt-0 border-sky-100/80 shrink-0 gap-3 min-w-[200px]">
-          <div className="text-left lg:text-right">
+        <div className="flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end justify-between lg:justify-center border-t lg:border-t-0 pt-3 lg:pt-0 border-sky-100/80 shrink-0 gap-3 w-full sm:w-auto lg:w-auto min-w-0 sm:min-w-[200px]">
+          <div className="text-left sm:text-left lg:text-right w-full sm:w-auto">
             <div
               className={`text-[11px] uppercase tracking-wider font-semibold ${
                 isDarkTheme ? 'text-slate-400' : 'text-[#1E3A8A]/60'
@@ -141,7 +141,7 @@ export const NextBestActionCard: React.FC<NextBestActionCardProps> = ({
 
           <button
             onClick={onOpenActionPlan}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-[#0B2545] via-[#0284C7] to-[#38BDF8] hover:from-[#081C33] hover:via-[#0369A1] hover:to-[#0EA5E9] text-white shadow-[0_3px_12px_rgba(2,132,199,0.25)] border border-sky-300/30 transition-all active:scale-95 shrink-0 whitespace-nowrap cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-[#0B2545] via-[#0284C7] to-[#38BDF8] hover:from-[#081C33] hover:via-[#0369A1] hover:to-[#0EA5E9] text-white shadow-[0_3px_12px_rgba(2,132,199,0.25)] border border-sky-300/30 transition-all active:scale-95 shrink-0 whitespace-nowrap cursor-pointer w-full sm:w-auto"
           >
             <span>{buttonLabel}</span>
             <ArrowRight className="w-3.5 h-3.5" />

@@ -209,9 +209,14 @@ export const ThreeHouseScene: React.FC<ThreeHouseSceneProps> = ({
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    // Telephoto isometric camera
-    const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 100);
-    camera.position.set(-17, 14, 19);
+    // Telephoto isometric camera (dynamically framed for portrait mobile vs landscape tablet/desktop)
+    const isMobilePortrait = width < 640 && height > width;
+    const camera = new THREE.PerspectiveCamera(isMobilePortrait ? 36 : 30, width / height, 0.1, 100);
+    if (isMobilePortrait) {
+      camera.position.set(-20, 16, 22);
+    } else {
+      camera.position.set(-17, 14, 19);
+    }
     cameraRef.current = camera;
 
     // WebGL Renderer with soft shadows
@@ -765,6 +770,8 @@ export const ThreeHouseScene: React.FC<ThreeHouseSceneProps> = ({
       if (!container || !renderer || !camera) return;
       const newW = container.clientWidth;
       const newH = container.clientHeight;
+      const isMob = newW < 640 && newH > newW;
+      camera.fov = isMob ? 36 : 30;
       camera.aspect = newW / newH;
       camera.updateProjectionMatrix();
       renderer.setSize(newW, newH);
