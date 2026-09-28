@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   INITIAL_SYSTEMS,
   INITIAL_BILLS,
@@ -9,8 +9,11 @@ import {
   generateTodayReadings,
   generateWeekDays,
   generateForecast,
+  getLiveSolarSystems,
+  getLiveDecomposition,
+  getLiveNextBestActions,
 } from './services/solarDataService';
-import { SolarSystem, ElectricityBill, PanelInspection, DeviationDecomposition } from './types/solar';
+import { SolarSystem, ElectricityBill, PanelInspection, DeviationDecomposition, NextBestAction } from './types/solar';
 import { SolarSenseNav, SolarNavTab } from './components/SolarSenseNav';
 import { HeroSolarHouse } from './components/HeroSolarHouse';
 import { SolarView } from './views/SolarView';
@@ -23,9 +26,23 @@ import { CopilotDrawer } from './components/CopilotDrawer';
 import { CheckCircle2, X } from 'lucide-react';
 
 export default function App() {
-  const [systems] = useState<SolarSystem[]>(INITIAL_SYSTEMS);
+  const [systems, setSystems] = useState<SolarSystem[]>(INITIAL_SYSTEMS);
+  const [nextActions, setNextActions] = useState<NextBestAction[]>(MOCK_NEXT_ACTIONS);
   const [activeSystemId, setActiveSystemId] = useState<string>('sys-home-9kw');
   const activeSystem = systems.find((s) => s.id === activeSystemId) || systems[0];
+
+  // Live Backend Data Sync with Automatic Fallback
+  useEffect(() => {
+    getLiveSolarSystems().then((sys) => {
+      if (sys && sys.length > 0) setSystems(sys);
+    });
+    getLiveDecomposition(activeSystemId, '2026-09-22').then((decomp) => {
+      if (decomp) setDecomposition(decomp);
+    });
+    getLiveNextBestActions(activeSystemId).then((actions) => {
+      if (actions && actions.length > 0) setNextActions(actions);
+    });
+  }, [activeSystemId]);
 
   // Primary Navigation Tab (Default to 'home' 3D Hero House Experience)
   const [activeTab, setActiveTab] = useState<SolarNavTab>('home');
@@ -145,7 +162,7 @@ export default function App() {
               <AnalyticsView
                 system={activeSystem}
                 decomposition={decomposition}
-                nextActions={MOCK_NEXT_ACTIONS}
+                nextActions={nextActions}
                 onOpenAnomalyModal={() => setIsWhyDropModalOpen(true)}
               />
             )}

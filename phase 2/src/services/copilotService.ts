@@ -50,7 +50,26 @@ export async function askSolarCopilot(
     };
   }
 
-  // 1. Tool Selection based on query semantics
+  // 1. Try Live FastAPI Agent Backend First
+  try {
+    const res = await fetch('http://localhost:8000/api/copilot/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: userQuery,
+        system_id: context.system.id,
+      }),
+      signal: AbortSignal.timeout(3000),
+    });
+    if (res.ok) {
+      const liveMsg = await res.json();
+      if (liveMsg && liveMsg.content) return liveMsg;
+    }
+  } catch {
+    // Seamless fallback to client-side tool evaluator
+  }
+
+  // 2. Tool Selection based on query semantics (Client-side Fallback)
   const toolCalls: CopilotMessage['tool_calls'] = [];
   const evidenceChips: CopilotMessage['evidence_chips'] = [];
   let answer = '';

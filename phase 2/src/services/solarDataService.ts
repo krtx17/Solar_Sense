@@ -754,3 +754,93 @@ export const SAMPLE_CSV_CONTENT = `timestamp,generation_kwh,grid_export_kwh,ambi
 2026-09-22T16:00:00Z,2.45,1.85,20.2
 2026-09-22T17:00:00Z,1.15,0.70,19.0
 2026-09-22T18:00:00Z,0.30,0.00,17.5`;
+
+/**
+ * -----------------------------------------------------------------------------
+ * Dynamic FastAPI Backend Integration with Offline Mock Fallback
+ * -----------------------------------------------------------------------------
+ */
+const API_BASE = (typeof window !== 'undefined' && (window as any).__SOLAR_API_URL__) || 'http://localhost:8000/api';
+
+export async function getLiveSolarSystems(): Promise<SolarSystem[]> {
+  try {
+    const res = await fetch(`${API_BASE}/systems`, { signal: AbortSignal.timeout(2000) });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+    }
+  } catch {
+    // Fall back seamlessly to local mock dataset
+  }
+  return INITIAL_SYSTEMS;
+}
+
+export async function getLiveReadings(systemId: string = 'sys-home-9kw', date: string = '2026-09-22'): Promise<ReadingPoint[]> {
+  try {
+    const res = await fetch(`${API_BASE}/readings?system_id=${encodeURIComponent(systemId)}&date=${encodeURIComponent(date)}`, { signal: AbortSignal.timeout(2000) });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+    }
+  } catch {
+    // Fall back to generated baseline
+  }
+  return generateTodayReadings(INITIAL_SYSTEMS[0]);
+}
+
+export async function getLiveForecast(systemId: string = 'sys-home-9kw', days: number = 5): Promise<ForecastPoint[]> {
+  try {
+    const res = await fetch(`${API_BASE}/forecast?system_id=${encodeURIComponent(systemId)}&days=${days}`, { signal: AbortSignal.timeout(2000) });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+    }
+  } catch {
+    // Fall back
+  }
+  return generateForecast(INITIAL_SYSTEMS[0]);
+}
+
+export async function getLiveDecomposition(systemId: string = 'sys-home-9kw', date: string = '2026-09-22'): Promise<DeviationDecomposition> {
+  try {
+    const res = await fetch(`${API_BASE}/decomposition?system_id=${encodeURIComponent(systemId)}&date=${encodeURIComponent(date)}`, { signal: AbortSignal.timeout(2000) });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch {
+    // Fall back
+  }
+  return BENCHMARK_DECOMPOSITION;
+}
+
+export async function getLiveNextBestActions(systemId: string = 'sys-home-9kw'): Promise<NextBestAction[]> {
+  try {
+    const res = await fetch(`${API_BASE}/actions?system_id=${encodeURIComponent(systemId)}`, { signal: AbortSignal.timeout(2000) });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+    }
+  } catch {
+    // Fall back
+  }
+  return MOCK_NEXT_ACTIONS;
+}
+
+export async function uploadTelemetryCsvLive(file: File): Promise<DataQualityReport | null> {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await fetch(`${API_BASE}/upload/csv`, {
+      method: 'POST',
+      body: formData,
+      signal: AbortSignal.timeout(8000),
+    });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch {
+    // Fall back
+  }
+  return null;
+}
+

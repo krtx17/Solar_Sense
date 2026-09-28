@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { UploadCloud, FileText, CheckCircle2, AlertTriangle, XCircle, ArrowRight, RefreshCw, X } from 'lucide-react';
 import { SolarSystem, DataQualityReport } from '../types/solar';
-import { validateCsvUpload, SAMPLE_CSV_CONTENT } from '../services/solarDataService';
+import { validateCsvUpload, uploadTelemetryCsvLive, SAMPLE_CSV_CONTENT } from '../services/solarDataService';
 
 interface DataUploadModalProps {
   isOpen: boolean;
@@ -38,8 +38,21 @@ export const DataUploadModal: React.FC<DataUploadModalProps> = ({
     }
   };
 
-  const readFile = (file: File) => {
+  const readFile = async (file: File) => {
     setIsProcessing(true);
+    // Try live Python backend DataQualityAgent first
+    try {
+      const liveReport = await uploadTelemetryCsvLive(file);
+      if (liveReport) {
+        setReport(liveReport);
+        setIsProcessing(false);
+        setStep('review');
+        return;
+      }
+    } catch {
+      // Continue to client-side fallback
+    }
+
     const reader = new FileReader();
     reader.onload = (event) => {
       const text = event.target?.result as string;
