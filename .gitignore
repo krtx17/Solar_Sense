@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+*/node_modules/
+venv/
+*/venv/
+.venv/
+*/.venv/
+
+# Python cache & compiled files
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+.pytest_cache/
+*/.pytest_cache/
+
+# Databases & local stores
+*.db
+*.sqlite
+*.sqlite3
+solarsense.db
+*/solarsense.db
+
+# Archives & binaries
+*.zip
+*.tar.gz
+*.rar
+
+# Build outputs
+dist/
+*/dist/
+build/
+*/build/
+.vite/
+*/.vite/
+
+# Environment files
+.env
+*/.env
+*.env.local
+
+# OS & IDE files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+*/logs/
+.system_generated/

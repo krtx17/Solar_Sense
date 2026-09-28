@@ -1,0 +1,6 @@
+{
+  "name": "SolarSense — Autonomous Clean Energy Experience",
+  "description": "Interactive 3D solar energy visualization, physical clear-sky baselines, and intelligent energy routing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
